@@ -13,7 +13,14 @@
     </b-form-group>
 
     <b-form-group label="Sample Mean">
-      <b-form-input id="sample-mean" v-model="sample_mean" type="number" step="0.01" required class="mb-3">
+      <b-form-input
+        id="sample-mean"
+        v-model="sample_mean"
+        type="number"
+        step="0.01"
+        required
+        class="mb-3"
+      >
       </b-form-input>
     </b-form-group>
 
@@ -35,11 +42,19 @@
       >
     </b-form-group>
     <b-form-group :disabled="!perform_hypothesis_test" label="Hypothesized Mean">
-      <b-form-input id="hypothesized-mean" v-model="hypothesized_mean" type="number" required class="mb-3"></b-form-input>
+      <b-form-input
+        id="hypothesized-mean"
+        v-model="hypothesized_mean"
+        type="number"
+        required
+        class="mb-3"
+      ></b-form-input>
     </b-form-group>
 
     <div class="d-flex justify-content-end py-3">
-      <b-button type="submit" variant="primary" size="lg" class="mx-4" @click.prevent="onSubmit">OK</b-button>
+      <b-button type="submit" variant="primary" size="lg" class="mx-4" @click.prevent="onSubmit"
+        >OK</b-button
+      >
       <b-button type="reset" variant="secondary" size="lg" @click.prevent="onReset">Reset</b-button>
     </div>
   </b-form>
@@ -68,69 +83,69 @@ export default {
   },
   methods: {
     onSubmit() {
-			// Reset the error message
-			this.error_message = null
+      // Reset the error message
+      this.error_message = null
       // Check the validity of the form fields and either display an error message or the entered values in a table.
-			const isValid = this._validateForm()
-			if (!isValid) {
-				this.onError(this.error_message)
-				return
-			}
+      const isValid = this._validateForm()
+      if (!isValid) {
+        this.onError(this.error_message)
+        return
+      }
 
-			// Emit the results to the parent component
-			this.$emit('submit', {
-				sample_size: this.sample_size,
-				sample_mean: this.sample_mean,
-				standard_deviation: this.standard_deviation,
-				hypothesized_mean: this.perform_hypothesis_test ? this.hypothesized_mean : undefined
-			})
+      // Emit the results to the parent component
+      this.$emit('submit', {
+        sample_size: this.sample_size,
+        sample_mean: this.sample_mean,
+        standard_deviation: this.standard_deviation,
+        hypothesized_mean: this.perform_hypothesis_test ? this.hypothesized_mean : undefined
+      })
     },
     onReset() {
-			// Reset the error message
-			this.error_message = null
+      // Reset the error message
+      this.error_message = null
       // Reset the form fields to their initial values.
-			this._updateDefaultValues()
-			// Emit the reset event to the parent component
-			this.$emit('reset')
+      this._updateDefaultValues()
+      // Emit the reset event to the parent component
+      this.$emit('reset')
     },
-		onError() {
-			// Reset the error message
-			this.$emit('error', this.error_message)
-		},
-		_validateForm() {
-			// Check sample size is at least 2
-			if (this.sample_size < 2) {
-				this.error_message = 'The sample size must be at least 2.'
-				return false
-			}
-			// Check sample size is a whole number
-			if (this.sample_size % 1 !== 0) {
-				this.error_message = 'The sample size must be a whole number.'
-				return false
-			}
-			// Check sample mean is a number
-			if (isNaN(this.sample_mean)) {
-				this.error_message = 'The sample mean must be a number.'
-				return false
-			}
-			// Check standard deviation is greater than 0
-			if (this.standard_deviation <= 0) {
-				this.error_message = 'The standard deviation must be greater than 0.'
-				return false
-			}
-			// Check hypothesized mean is a number
-			if (this.perform_hypothesis_test && isNaN(this.hypothesized_mean)) {
-				this.error_message = 'The hypothesized mean must be a number.'
-				return false
-			}
-			return true
-		},
+    onError() {
+      // Reset the error message
+      this.$emit('error', this.error_message)
+    },
+    _validateForm() {
+      // Check sample size is at least 2
+      if (this.sample_size < 2) {
+        this.error_message = 'The sample size must be at least 2.'
+        return false
+      }
+      // Check sample size is a whole number
+      if (this.sample_size % 1 !== 0) {
+        this.error_message = 'The sample size must be a whole number.'
+        return false
+      }
+      // Check sample mean is a number
+      if (isNaN(this.sample_mean)) {
+        this.error_message = 'The sample mean must be a number.'
+        return false
+      }
+      // Check standard deviation is greater than 0
+      if (this.standard_deviation <= 0) {
+        this.error_message = 'The standard deviation must be greater than 0.'
+        return false
+      }
+      // Check hypothesized mean is a number
+      if (this.perform_hypothesis_test && isNaN(this.hypothesized_mean)) {
+        this.error_message = 'The hypothesized mean must be a number.'
+        return false
+      }
+      return true
+    },
     _updateDefaultValues() {
       this.sample_size = this.default_values.sample_size
       this.sample_mean = this.default_values.sample_mean
       this.standard_deviation = this.default_values.standard_deviation
       this.hypothesized_mean = this.default_values.hypothesized_mean
-			this.perform_hypothesis_test = this.hypothesized_mean != undefined
+      this.perform_hypothesis_test = this.hypothesized_mean != undefined
     }
   }
 }
