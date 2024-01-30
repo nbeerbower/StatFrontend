@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <AnalysisForm @submit="onSubmit" @reset="onReset" />
-        <ResultsTable :results="results" />
+        <ResultsTable class="mt-4" :results="results" />
       </div>
     </div>
   </div>
