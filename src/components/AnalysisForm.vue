@@ -37,7 +37,7 @@
     </b-form-group>
 
     <div class="d-flex justify-content-end py-3">
-      <b-button type="submit" variant="primary" size="lg" class="mx-4">OK</b-button>
+      <b-button type="submit" variant="primary" size="lg" class="mx-4" @click.prevent="onSubmit">OK</b-button>
       <b-button type="reset" variant="secondary" size="lg" @click.prevent="onReset">Reset</b-button>
     </div>
   </b-form>
@@ -67,10 +67,20 @@ export default {
   methods: {
     onSubmit() {
       // Check the validity of the form fields and either display an error message or the entered values in a table.
+
+			// Emit the results to the parent component
+			this.$emit('submit', {
+				sample_size: this.sample_size,
+				sample_mean: this.sample_mean,
+				standard_deviation: this.standard_deviation,
+				hypothesized_mean: this.perform_hypothesis_test ? this.hypothesized_mean : undefined
+			})
     },
     onReset() {
       // Reset the form fields to their initial values.
 			this._updateDefaultValues()
+			// Emit the reset event to the parent component
+			this.$emit('reset')
     },
     _updateDefaultValues() {
       this.sample_size = this.default_values.sample_size
