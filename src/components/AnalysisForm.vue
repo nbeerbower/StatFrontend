@@ -11,6 +11,11 @@
       ></b-form-input>
     </b-form-group>
 
+    <b-form-group label="Sample Mean">
+      <b-form-input v-model="sample_mean" type="number" step="0.01" required class="mb-3">
+      </b-form-input>
+    </b-form-group>
+
     <b-form-group label="Standard Deviation">
       <b-form-input
         v-model="standard_deviation"
@@ -20,10 +25,6 @@
         required
         class="mb-3"
       ></b-form-input>
-    </b-form-group>
-
-    <b-form-group label="Sample Mean">
-      <b-form-input v-model="sample_mean" type="number" required class="mb-3"></b-form-input>
     </b-form-group>
 
     <b-form-group>
@@ -37,7 +38,7 @@
 
     <div class="d-flex justify-content-end py-3">
       <b-button type="submit" variant="primary" size="lg" class="mx-4">OK</b-button>
-      <b-button type="reset" variant="secondary" size="lg">Reset</b-button>
+      <b-button type="reset" variant="secondary" size="lg" @click.prevent="onReset">Reset</b-button>
     </div>
   </b-form>
 </template>
@@ -46,6 +47,7 @@
 export default {
   data() {
     return {
+      default_values: {},
       sample_size: null,
       sample_mean: null,
       standard_deviation: null,
@@ -54,7 +56,13 @@ export default {
     }
   },
   mounted() {
-    // Fetch the default values from the JSON file or mock REST API and assign them to the data properties.
+    // Fetch the default values
+    fetch('/data/defaults.json')
+      .then((response) => response.json())
+      .then((data) => {
+        this.default_values = data
+        this._updateDefaultValues()
+      })
   },
   methods: {
     onSubmit() {
@@ -62,6 +70,14 @@ export default {
     },
     onReset() {
       // Reset the form fields to their initial values.
+			this._updateDefaultValues()
+    },
+    _updateDefaultValues() {
+      this.sample_size = this.default_values.sample_size
+      this.sample_mean = this.default_values.sample_mean
+      this.standard_deviation = this.default_values.standard_deviation
+      this.hypothesized_mean = this.default_values.hypothesized_mean
+			this.perform_hypothesis_test = this.hypothesized_mean != undefined
     }
   }
 }
