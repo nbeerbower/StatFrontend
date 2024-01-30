@@ -66,7 +66,14 @@ export default {
   },
   methods: {
     onSubmit() {
+			// Reset the error message
+			this.error_message = null
       // Check the validity of the form fields and either display an error message or the entered values in a table.
+			const isValid = this._validateForm()
+			if (!isValid) {
+				this.onError(this.error_message)
+				return
+			}
 
 			// Emit the results to the parent component
 			this.$emit('submit', {
@@ -77,11 +84,45 @@ export default {
 			})
     },
     onReset() {
+			// Reset the error message
+			this.error_message = null
       // Reset the form fields to their initial values.
 			this._updateDefaultValues()
 			// Emit the reset event to the parent component
 			this.$emit('reset')
     },
+		onError() {
+			// Reset the error message
+			this.$emit('error', this.error_message)
+		},
+		_validateForm() {
+			// Check sample size is at least 2
+			if (this.sample_size < 2) {
+				this.error_message = 'The sample size must be at least 2.'
+				return false
+			}
+			// Check sample size is a whole number
+			if (this.sample_size % 1 !== 0) {
+				this.error_message = 'The sample size must be a whole number.'
+				return false
+			}
+			// Check sample mean is a number
+			if (isNaN(this.sample_mean)) {
+				this.error_message = 'The sample mean must be a number.'
+				return false
+			}
+			// Check standard deviation is greater than 0
+			if (this.standard_deviation <= 0) {
+				this.error_message = 'The standard deviation must be greater than 0.'
+				return false
+			}
+			// Check hypothesized mean is a number
+			if (this.perform_hypothesis_test && isNaN(this.hypothesized_mean)) {
+				this.error_message = 'The hypothesized mean must be a number.'
+				return false
+			}
+			return true
+		},
     _updateDefaultValues() {
       this.sample_size = this.default_values.sample_size
       this.sample_mean = this.default_values.sample_mean
