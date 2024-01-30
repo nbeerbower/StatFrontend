@@ -2,6 +2,7 @@
   <b-form @submit.prevent="onSubmit">
     <b-form-group label="Sample Size">
       <b-form-input
+        id="sample-size"
         v-model="sample_size"
         type="number"
         min="2"
@@ -12,12 +13,13 @@
     </b-form-group>
 
     <b-form-group label="Sample Mean">
-      <b-form-input v-model="sample_mean" type="number" step="0.01" required class="mb-3">
+      <b-form-input id="sample-mean" v-model="sample_mean" type="number" step="0.01" required class="mb-3">
       </b-form-input>
     </b-form-group>
 
     <b-form-group label="Standard Deviation">
       <b-form-input
+        id="standard-deviation"
         v-model="standard_deviation"
         type="number"
         min="0.01"
@@ -28,12 +30,12 @@
     </b-form-group>
 
     <b-form-group>
-      <b-form-checkbox v-model="perform_hypothesis_test" class="mb-3"
+      <b-form-checkbox id="perform-hypothesis-test" v-model="perform_hypothesis_test" class="mb-3"
         >Perform hypothesis test</b-form-checkbox
       >
     </b-form-group>
     <b-form-group :disabled="!perform_hypothesis_test" label="Hypothesized Mean">
-      <b-form-input v-model="hypothesized_mean" type="number" required class="mb-3"></b-form-input>
+      <b-form-input id="hypothesized-mean" v-model="hypothesized_mean" type="number" required class="mb-3"></b-form-input>
     </b-form-group>
 
     <div class="d-flex justify-content-end py-3">
