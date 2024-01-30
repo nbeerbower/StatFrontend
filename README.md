@@ -1,35 +1,17 @@
 # StatFrontend
 
-This template should help get you started developing with Vue 3 in Vite.
+StatFrontend is a simple Vue 3 application built with Vite. It is purely for demonstration purposes and is not intended for production use.
 
-## Recommended IDE Setup
+## Getting Started
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+To set up the project, follow these steps:
 
-## Customize configuration
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Install the project dependencies with `npm install`.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+After setting up, you can start the development server with `npm run dev`.
 
-## Project Setup
+## Testing
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+We use Vitest for testing. To run the tests, use the `npm run test:unit` command.
