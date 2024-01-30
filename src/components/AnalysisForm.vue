@@ -56,8 +56,8 @@ export default {
     }
   },
   mounted() {
-    // Fetch the default values
-    fetch('/data/defaults.json')
+    // Fetch the default values (On a real application, this would be done through a Vuex action)
+    fetch('http://localhost:5173/data/defaults.json')
       .then((response) => response.json())
       .then((data) => {
         this.default_values = data
