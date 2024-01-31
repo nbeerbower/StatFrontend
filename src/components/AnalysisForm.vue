@@ -124,7 +124,7 @@ export default {
         return false
       }
       // Check sample mean is a number
-      if (isNaN(this.sample_mean)) {
+      if (this.sample_mean === '' || isNaN(this.sample_mean)) {
         this.error_message = 'The sample mean must be a number.'
         return false
       }
@@ -133,8 +133,8 @@ export default {
         this.error_message = 'The standard deviation must be greater than 0.'
         return false
       }
-      // Check hypothesized mean is a number
-      if (this.perform_hypothesis_test && isNaN(this.hypothesized_mean)) {
+      // Check hypothesized mean is a number (only if hypothesis test is enabled)
+      if (this.perform_hypothesis_test && (this.hypothesized_mean === '' || isNaN(this.hypothesized_mean))) {
         this.error_message = 'The hypothesized mean must be a number.'
         return false
       }
